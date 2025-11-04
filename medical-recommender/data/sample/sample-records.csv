@@ -1,0 +1,6 @@
+name,age,symptoms,medical_history,recommendations
+John Doe,30,"fever,cough","no significant history","COVID-19 test, CBC"
+Jane Smith,45,"chest pain,shortness of breath","hypertension","ECG, chest X-ray"
+Alice Johnson,28,"headache,nausea","migraines","CT scan, blood tests"
+Bob Brown,60,"joint pain,fatigue","diabetes","X-ray, blood tests"
+Charlie Davis,50,"abdominal pain,diarrhea","none","ultrasound, stool test"

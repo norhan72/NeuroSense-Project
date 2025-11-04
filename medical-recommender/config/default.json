@@ -1,0 +1,27 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "username": "user",
+    "password": "password",
+    "database": "medical_recommender"
+  },
+  "api": {
+    "port": 3000,
+    "basePath": "/api"
+  },
+  "logging": {
+    "level": "info",
+    "file": "logs/app.log"
+  },
+  "ml": {
+    "modelPath": "src/services/ml/model.ts"
+  },
+  "recommendations": {
+    "defaultSymptoms": ["fever", "cough", "fatigue"],
+    "labTests": {
+      "common": ["CBC", "LFT", "KFT"],
+      "specialized": ["CT Scan", "MRI"]
+    }
+  }
+}

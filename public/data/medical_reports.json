@@ -1,0 +1,118 @@
+{
+  "analysis": {
+    "highRisk": {
+      "ar": "تم اكتشاف أنماط عصبية عالية الخطورة في الأقسام التالية: {sections}.",
+      "en": "High-risk neurological patterns detected in the following sections: {sections}."
+    },
+    "noHighRisk": {
+      "ar": "لم يتم اكتشاف أنماط عصبية عالية الخطورة.",
+      "en": "No high-risk neurological patterns detected."
+    },
+    "moodHigh": {
+      "ar": "قد يكون الضغط النفسي يؤثر على الاستجابات العصبية. الاضطرابات المزاجية قد تكون مرتبطة بمشاكل عصبية كامنة.",
+      "en": "Emotional stress may be influencing neurological responses. Mood disorders may be associated with underlying neurological issues."
+    },
+    "cognitiveIrregular": {
+      "ar": "تم اكتشاف عدم انتظام في الوظائف المعرفية — يُنصح بإجراء تقييم سريري إضافي. قد يشير هذا إلى مشاكل في الذاكرة أو التركيز أو معالجة المعلومات.",
+      "en": "Cognitive irregularities detected — consider further clinical evaluation. This may indicate issues with memory, concentration, or information processing."
+    },
+    "movementConcern": {
+      "ar": "هناك مخاوف تتعلق بالحركة والإحساس تحتاج إلى مراقبة دقيقة. قد تشمل هذه المشاكل ضعف العضلات، التنميل، أو صعوبة في التنسيق الحركي.",
+      "en": "Movement and sensation concerns detected that require careful monitoring. These may include muscle weakness, numbness, or coordination difficulties."
+    },
+    "visionIssues": {
+      "ar": "تم اكتشاف مشاكل في الرؤية قد تتطلب استشارة طبيب عيون. قد تشمل ضبابية الرؤية، فقدان الرؤية المؤقت، أو ألم في العين.",
+      "en": "Vision issues detected that may require ophthalmological consultation. These may include blurred vision, temporary vision loss, or eye pain."
+    },
+    "painPatterns": {
+      "ar": "تم ملاحظة أنماط ألم غير عادية قد تشير إلى مشاكل عصبية. قد يكون الألم عصبي المنشأ ويتطلب تقييم متخصص.",
+      "en": "Unusual pain patterns observed that may indicate neurological issues. The pain may be neuropathic in origin and requires specialized assessment."
+    },
+    "voiceChanges": {
+      "ar": "التغييرات في الصوت والنطق قد تشير إلى مشاكل في الأعصاب القحفية. قد تشمل البحة، ضعف الصوت، أو صعوبة في النطق.",
+      "en": "Voice and speech changes may indicate cranial nerve issues. These may include hoarseness, voice weakness, or speech difficulties."
+    },
+    "familyHistory": {
+      "ar": "التاريخ العائلي للمرض يزيد من احتمالية الحاجة لمتابعة منتظمة. العوامل الوراثية قد تلعب دوراً في تطور الحالة.",
+      "en": "Family history increases the likelihood of needing regular monitoring. Genetic factors may play a role in the development of the condition."
+    }
+  },
+  "recommendations": {
+    "highRisk": {
+      "ar": "يُنصح بشدة بمراجعة طبيب أعصاب لإجراء تقييم شامل ومفصل. قد تشمل الفحوصات المطلوبة: MRI للدماغ والحبل الشوكي، فحص السائل النخاعي، فحوصات الدم الشاملة، وفحص التوصيل العصبي.",
+      "en": "It is strongly recommended to consult a neurologist for a comprehensive assessment. Required tests may include: Brain and spinal cord MRI, cerebrospinal fluid examination, comprehensive blood tests, and nerve conduction studies."
+    },
+    "mediumRisk": {
+      "ar": "يُنصح بمراقبة الأعراض وإجراء فحوصات دورية مع طبيب متخصص. قد يكون من المفيد الاحتفاظ بمفكرة يومية للأعراض لتتبع التطورات.",
+      "en": "It is recommended to monitor symptoms and have regular checkups with a specialist. It may be helpful to keep a daily symptom journal to track developments."
+    },
+    "lowRisk": {
+      "ar": "يبدو أنك في نطاق طبيعي. حافظ على العادات الصحية والفحوصات الدورية. إذا لاحظت أي تغييرات في الأعراض، استشر طبيبك فوراً.",
+      "en": "You appear to be in a normal range. Maintain healthy habits and regular checkups. If you notice any changes in symptoms, consult your doctor immediately."
+    },
+    "cognitive": {
+      "ar": "يُنصح بإجراء تقييم نفسي عصبي شامل للوظائف المعرفية. قد يشمل ذلك اختبارات الذاكرة، الانتباه، والوظائف التنفيذية.",
+      "en": "A comprehensive neuropsychological evaluation is recommended for cognitive functions. This may include memory, attention, and executive function tests."
+    },
+    "vision": {
+      "ar": "يُنصح بمراجعة طبيب عيون وإجراء فحوصات العين الشاملة. قد تشمل فحص قاع العين، فحص المجال البصري، وفحص التصوير المقطعي للعصب البصري.",
+      "en": "An ophthalmological consultation and comprehensive eye examination are recommended. This may include fundus examination, visual field testing, and optical coherence tomography."
+    },
+    "movement": {
+      "ar": "يُنصح بمراجعة أخصائي العلاج الطبيعي وإجراء فحوصات عصبية للحركة. قد تشمل تقييم القوة العضلية، التوازن، والتنسيق الحركي.",
+      "en": "A physical therapy consultation and neurological movement assessments are recommended. This may include muscle strength, balance, and coordination evaluation."
+    },
+    "mood": {
+      "ar": "يُنصح بمراجعة أخصائي الصحة النفسية لدعم الصحة العاطفية. قد تساعد العلاجات النفسية والأدوية في تحسين الأعراض.",
+      "en": "A mental health professional consultation is recommended for emotional support. Psychotherapy and medications may help improve symptoms."
+    }
+  },
+  "conditions": {
+    "multipleSclerosis": {
+      "ar": "التصلب المتعدد (MS)",
+      "en": "Multiple Sclerosis (MS)"
+    },
+    "peripheralNeuropathy": {
+      "ar": "اعتلال الأعصاب المحيطية",
+      "en": "Peripheral Neuropathy"
+    },
+    "opticNeuritis": {
+      "ar": "التهاب العصب البصري",
+      "en": "Optic Neuritis"
+    },
+    "myastheniaGravis": {
+      "ar": "الوهن العضلي الوبيل",
+      "en": "Myasthenia Gravis"
+    },
+    "parkinsons": {
+      "ar": "مرض باركنسون",
+      "en": "Parkinson's Disease"
+    },
+    "fibromyalgia": {
+      "ar": "الألم العضلي الليفي",
+      "en": "Fibromyalgia"
+    },
+    "chronicFatigue": {
+      "ar": "متلازمة التعب المزمن",
+      "en": "Chronic Fatigue Syndrome"
+    },
+    "anxietyDisorder": {
+      "ar": "اضطراب القلق",
+      "en": "Anxiety Disorder"
+    },
+    "depression": {
+      "ar": "الاكتئاب",
+      "en": "Depression"
+    }
+  },
+  "detailedAnalysis": {
+    "introduction": {
+      "ar": "بناءً على التحليل الشامل لجميع الأقسام والنتائج التفصيلية للاستبيان، تم إجراء تقييم متعدد الأبعاد للحالة الصحية. النتائج تشير إلى أنماط مختلفة من الأعراض التي قد تتطلب اهتماماً طبياً متخصصاً.",
+      "en": "Based on comprehensive analysis of all sections and detailed survey results, a multidimensional health assessment has been conducted. The results indicate various patterns of symptoms that may require specialized medical attention."
+    },
+    "conclusion": {
+      "ar": "من المهم التأكيد على أن هذا التحليل هو تقييم أولي وليس تشخيصاً نهائياً. التشخيص الدقيق يتطلب فحصاً سريرياً شاملاً من قبل طبيب متخصص. يُنصح بشدة بمراجعة طبيب أعصاب أو طبيب مختص في أقرب وقت ممكن لإجراء المزيد من الفحوصات والتأكد من التشخيص الصحيح.",
+      "en": "It is important to emphasize that this analysis is a preliminary assessment and not a definitive diagnosis. Accurate diagnosis requires comprehensive clinical examination by a specialist physician. It is strongly recommended to consult a neurologist or specialist as soon as possible for further testing and confirmation of the correct diagnosis."
+    }
+  }
+}

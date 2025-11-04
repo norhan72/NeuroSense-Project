@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Patient",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "medicalHistory": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["male", "female", "other"]
+    }
+  },
+  "required": ["name", "age", "symptoms"]
+}
