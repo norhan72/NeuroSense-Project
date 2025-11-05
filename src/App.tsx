@@ -11,7 +11,7 @@ import Input from "./pages/Input";
 import VoiceAnalysis from "./pages/VoiceAnalysis";
 import DisabilityTest from "./pages/DisabilityTest";
 import EarlyDetectionTest from "./pages/EarlyDetectionTest";
-import ImageAnalysis from "./pages/ImageAnalysis";
+import ImageAnalysis from "./pages/visual perception test";
 import ResultsPage from "./pages/ResultsPage";
 import NotFound from "./pages/NotFound";
 
