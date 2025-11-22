@@ -8,10 +8,11 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { NeuralBackground } from "@/components/NeuralBackground";
 import Home from "./pages/Home";
 import Input from "./pages/Input";
+import Index from "./pages/Index";
 import VoiceAnalysis from "./pages/VoiceAnalysis";
 import DisabilityTest from "./pages/DisabilityTest";
 import EarlyDetectionTest from "./pages/EarlyDetectionTest";
-import ImageAnalysis from "./pages/visual perception test";
+import VisualCognitive from "./pages/VisualCognitive";
 import ResultsPage from "./pages/ResultsPage";
 import NotFound from "./pages/NotFound";
 
@@ -29,10 +30,11 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/input" element={<Input />} />
+          <Route path="/index" element={<Index />} />
           <Route path="/voice-analysis" element={<VoiceAnalysis />} />
           <Route path="/disability-test" element={<DisabilityTest />} />
           <Route path="/early-detection" element={<EarlyDetectionTest />} />
-          <Route path="/image-analysis" element={<ImageAnalysis />} />
+          <Route path="/VisualCognitive" element={<VisualCognitive />} />
           <Route path="/results" element={<ResultsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

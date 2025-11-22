@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassCard from '@/components/GlassCard';
 import NeurosSenseLogo from '@/assets/NeurosSensecan-logo.jpg';
-import aiDoctorAvatar from '@/assets/ai-doctor-avatar.jpg';
+// import aiDoctorAvatar from '@/assets/ai-doctor-avatar.jpg';
 
 interface SplashScreenProps {
   onNavigate: (screen: string) => void;
