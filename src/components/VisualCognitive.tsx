@@ -27,18 +27,22 @@ const VisualCognitiveTest: React.FC = () => {
 	const { t } = useLanguage();
 
 	useEffect(() => {
-		fetch(`${BASE_SERVER_URL_1}/vision/start`)
-			.then((res) => res.json())
-			.then((data) => {
-				if (data && data.image) {
-					setImageUrl(data.image);
-					setSessionId(data.session_id);
-					setDifficulty(data.difficulty);
-				} else {
-					toast.error('Failed to load image');
-				}
-			})
-			.catch((error) => toast.error('Failed to load image', error));
+		if (userData?.results && userData.results['vision']) {
+			navigate('/');
+		} else {
+			fetch(`${BASE_SERVER_URL_1}/vision/start`)
+				.then((res) => res.json())
+				.then((data) => {
+					if (data && data.image) {
+						setImageUrl(data.image);
+						setSessionId(data.session_id);
+						setDifficulty(data.difficulty);
+					} else {
+						toast.error('Failed to load image');
+					}
+				})
+				.catch((error) => toast.error('Failed to load image', error));
+		}
 	}, []);
 
 	useEffect(() => {
@@ -77,30 +81,32 @@ const VisualCognitiveTest: React.FC = () => {
 
 	return (
 		<div className='flex flex-col items-center gap-4 p-4'>
-			<h1 className='text-2xl font-bold'>{t('vision.question')}</h1>
 			{!finished ? (
-				<div className='flex flex-col justify-center items-center gap-4'>
-					<div className='border p-2 rounded'>
-						<img src={`/vision/${imageUrl}`} alt='Test Visual' className='max-w-xs' />
-					</div>
+				<>
+					<h1 className='text-2xl font-bold'>{t('vision.question')}</h1>
+					<div className='flex flex-col justify-center items-center gap-4'>
+						<div className='border p-2 rounded'>
+							<img src={`/vision/${imageUrl}`} alt='Test Visual' className='max-w-xs' />
+						</div>
 
-					<div className='flex gap-4'>
-						<button
-							onClick={() => handleAnswer('clear')}
-							className='px-6 py-3 bg-green-500 text-white rounded-2xl shadow'>
-							{t('vision.btnClear')}
-						</button>
+						<div className='flex gap-4'>
+							<button
+								onClick={() => handleAnswer('clear')}
+								className='px-6 py-3 bg-green-500 text-white rounded-2xl shadow'>
+								{t('vision.btnClear')}
+							</button>
 
-						<button
-							onClick={() => handleAnswer('not clear')}
-							className='px-6 py-3 bg-red-500 text-white rounded-2xl shadow'>
-							{t('vision.btnNonClear')}
-						</button>
+							<button
+								onClick={() => handleAnswer('not clear')}
+								className='px-6 py-3 bg-red-500 text-white rounded-2xl shadow'>
+								{t('vision.btnNonClear')}
+							</button>
+						</div>
 					</div>
-				</div>
+				</>
 			) : (
 				<>
-					<span>{`${t('vision.completed')} - ${finalResult.vision_score} - ${
+					<span>{`${t('vision.completed')} - ${finalResult?.vision_score?.toFixed(2)} - ${
 						finalResult.interpretation_en
 					}`}</span>
 					<Button

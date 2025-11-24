@@ -23,7 +23,7 @@ export interface IUserData {
 export const defaultUserData: IUserData = {
 	name: '',
 	age: null,
-	gender: undefined,
+	gender: null,
 	symptoms: '',
 	medicalHistory: '',
 	results: { vision: null, motion: null, speech: null, survey: null },

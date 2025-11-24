@@ -16,7 +16,7 @@ import * as Select from '@radix-ui/react-select';
 export const InputForm = () => {
 	const navigate = useNavigate();
 	const { t, language } = useLanguage();
-	const { userData, setUserData } = useUserData();
+	const { userData, setUserData, resetUserData } = useUserData();
 	const { theme } = useTheme();
 	const [patientName, setPatientName] = useState('');
 	const [age, setAge] = useState('');
@@ -85,6 +85,12 @@ export const InputForm = () => {
 			symptoms: prev?.symptoms?.length ? prev.symptoms : finalSymptoms,
 			medicalHistory: prev?.medicalHistory?.length ? prev.medicalHistory : finalMedicalHistory,
 		}));
+	};
+
+	const resetAnalysis = () => {
+		resetUserData();
+		toast.success(t('totalResult.analysisReset'));
+		setTimeout(() => () => navigate('/'), 1000);
 	};
 
 	return (
@@ -221,10 +227,7 @@ export const InputForm = () => {
 							background: 'var(--gradient-primary)',
 							transition: 'var(--transition-smooth)',
 						}}
-						disabled={
-							userData.results &&
-							(!userData.name || !userData.age || !userData.gender || !userData.symptoms)
-						}>
+						disabled={userData.name.length > 0 || !patientName || !age || !gender || !symptoms}>
 						{t('input.save')}
 					</Button>
 
@@ -236,7 +239,8 @@ export const InputForm = () => {
 								type='button'
 								onClick={() => navigate('/image-analysis')}
 								variant='outline'
-								className='flex flex-col items-center gap-3 h-auto text-base'>
+								className='flex flex-col items-center gap-3 h-auto text-base'
+								disabled={userData.results && (userData.results['vision'] ? true : false)}>
 								<Camera className='w-8 h-8' />
 								<span>{t('input.imageAnalysis')}</span>
 							</Button>
@@ -245,7 +249,10 @@ export const InputForm = () => {
 								onClick={() => navigate('/voice-analysis')}
 								variant='outline'
 								className='flex flex-col items-center gap-3 h-auto text-base'
-								disabled={userData.results && !userData.results['vision']}>
+								disabled={
+									userData.results &&
+									(!userData.results['vision'] || (userData.results['speech'] ? true : false))
+								}>
 								<Mic className='w-8 h-8' />
 								<span>{t('input.voiceAnalysis')}</span>
 							</Button>
@@ -254,8 +261,10 @@ export const InputForm = () => {
 								onClick={() => navigate('/disability-test')}
 								variant='outline'
 								className='flex flex-col items-center gap-3 h-auto text-base'
-								// disabled={userData.results && !userData.results['speech']}>
-							>
+								disabled={
+									userData.results &&
+									(!userData.results['speech'] || (userData.results['motion'] ? true : false))
+								}>
 								<Activity className='w-8 h-8' />
 								<span>{t('input.disabilityTest')}</span>
 							</Button>
@@ -263,8 +272,7 @@ export const InputForm = () => {
 								type='button'
 								onClick={() => navigate('/early-detection')}
 								variant='outline'
-								className='flex flex-col items-center gap-3 h-auto text-base whitespace-normal'
-								disabled={userData.results && !userData.results['motion']}>
+								className='flex flex-col items-center gap-3 h-auto text-base whitespace-normal'>
 								<svg className='w-8 h-8' fill='currentColor' viewBox='0 0 20 20'>
 									<path
 										fillRule='evenodd'
@@ -288,13 +296,13 @@ export const InputForm = () => {
 							disabled={userData.results && !userData.results['survey']}>
 							{t('input.analyze')}
 						</Button>
-						{/* <Button
+						<Button
 							type='button'
-							variant='outline'
-							onClick={() => navigate('/')}
+							variant='destructive'
+							onClick={resetAnalysis}
 							className='flex-1 text-lg py-6'>
-							{t('input.back')}
-						</Button> */}
+							{t('input.reset')}
+						</Button>
 					</div>
 				</form>
 

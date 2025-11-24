@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -22,6 +22,12 @@ const VoiceAnalysis = () => {
 		label_en: null,
 	});
 
+	useEffect(() => {
+		if (userData?.results && userData.results['speech']) {
+			navigate('/');
+		}
+	}, []);
+
 	const handleRecordComplete = (blob: Blob) => {
 		setRecordedBlob(blob);
 		toast.success(t('voice.recordingSaved'));
@@ -41,14 +47,6 @@ const VoiceAnalysis = () => {
 			.catch(() => toast.error('Failed to analyze audio - فشل تحليل الصوت'));
 	};
 
-	const handleComplete = () => {
-		if (!recordedBlob) {
-			toast.error(t('voice.errorNoRecording'));
-			return;
-		}
-		navigate('/');
-	};
-
 	return (
 		<>
 			<LanguageToggle />
@@ -63,25 +61,33 @@ const VoiceAnalysis = () => {
 					</div>
 
 					{/* Recorder */}
-					{finished ? (
-						<span>{`${t('voice.testCompleted')}: ${finalResult.score} - ${finalResult.label_en}`}</span>
-					) : (
-						<Card className='p-8 bg-card/50 backdrop-blur-lg text-center'>
-							<VoiceRecorder onRecordComplete={handleRecordComplete} />
-
-							{recordedBlob && <p className='text-green-500 mt-4'>{t('voice.recordingSaved')}</p>}
-						</Card>
-					)}
+					<Card className='p-8 bg-card/50 backdrop-blur-lg text-center'>
+						{finished ? (
+							<p>
+								<strong>{`${t('voice.testCompleted')}:`}</strong>{' '}
+								{`${Math.max(finalResult?.score * 100, finalResult?.score * -100).toFixed(2)}% - ${
+									appLanguage === 'en' ? finalResult?.label_en : finalResult?.label_ar
+								}`}
+							</p>
+						) : (
+							<>
+								<VoiceRecorder onRecordComplete={handleRecordComplete} />
+								{recordedBlob && <p className='text-green-500 mt-4'>{t('voice.recordingSaved')}</p>}
+							</>
+						)}
+					</Card>
 
 					{/* Submit */}
 					<div className='flex gap-4'>
-						<Button onClick={() => navigate('/input')} variant='outline' className='flex-1'>
+						<Button type='button' onClick={() => navigate('/input')} variant='outline' className='flex-1'>
 							{t('input.back')}
 						</Button>
 
 						<Button
-							onClick={handleComplete}
-							className='flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white'>
+							type='submit'
+							onClick={() => navigate('/disability-test')}
+							className='flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+							disabled={!finished}>
 							{t('voice.complete')}
 							{appLanguage === 'en' ? (
 								<ArrowRight className='mr-2 w-4 h-4' />

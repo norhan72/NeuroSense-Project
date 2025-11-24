@@ -1,21 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Timer, Play, Pause, RotateCcw, Activity, ArrowRight } from 'lucide-react';
+import { Timer, Play, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { LanguageToggle } from '@/components/LanguageToggle';
 import { BASE_SERVER_URL_1 } from '@/utils';
 import { useUserData } from '@/contexts/useUserData';
 
 const DisabilityTest = () => {
 	const navigate = useNavigate();
-	const { t } = useLanguage();
+	const { t, language } = useLanguage();
 	const { userData, setUserData } = useUserData();
 	const [isRunning, setIsRunning] = useState(false);
 	const [analysisComplete, setAnalysisComplete] = useState(false);
 	const [time, setTime] = useState(0);
+	const [finalResult, setFinalResult] = useState<{ score: number; label_en: string; label_ar: string }>({
+		score: null,
+		label_ar: null,
+		label_en: null,
+	});
 	const [samples, setSamples] = useState<
 		{
 			t: number;
@@ -27,6 +31,12 @@ const DisabilityTest = () => {
 			gamma: number;
 		}[]
 	>([]);
+
+	useEffect(() => {
+		if (userData?.results && userData.results['motion']) {
+			navigate('/');
+		}
+	}, []);
 
 	useEffect(() => {
 		let interval: NodeJS.Timeout;
@@ -99,7 +109,6 @@ const DisabilityTest = () => {
 	};
 
 	const stopRecording = () => {
-		alert(samples.length);
 		setIsRunning(false);
 	};
 
@@ -108,37 +117,40 @@ const DisabilityTest = () => {
 			toast.error(t('disability.errorNoData'));
 			return;
 		}
-		fetch(`${BASE_SERVER_URL_1}/motion/analyze`, { method: 'POST', body: JSON.stringify(samples) })
+		fetch(`${BASE_SERVER_URL_1}/motion/analyze`, { method: 'POST', body: JSON.stringify({ samples }) })
 			.then((res) => res.json())
 			.then((res) => {
 				toast.success(t('disability.analysisSuccess'));
 				setAnalysisComplete(true);
-				setUserData({ ...userData, results: { ...userData.results, motion: res } });
+				setFinalResult({ score: res.score, label_en: res.label_en, label_ar: res.label_ar });
+				setUserData({
+					...userData,
+					results: { ...userData.results, motion: { ...res, score: Math.max(res.score, -res.score) } },
+				});
 			})
 			.catch(() => toast.error(t('disability.errorFail')));
 	};
 
 	return (
-		<>
-			<LanguageToggle />
-			<div className='min-h-screen p-6 pb-24'>
-				<div className='max-w-2xl mx-auto space-y-6'>
-					{/* Header */}
-					<div className='text-center mb-8'>
-						<h1
-							className='text-3xl font-bold mb-2'
-							style={{
-								background: 'var(--gradient-primary)',
-								WebkitBackgroundClip: 'text',
-								WebkitTextFillColor: 'transparent',
-								backgroundClip: 'text',
-							}}>
-							{t('disability.title')}
-						</h1>
-						<p className='text-muted-foreground text-xl'>{t('disability.subtitle')}</p>
-					</div>
+		<div className='min-h-screen p-6 pb-24'>
+			<div className='max-w-2xl mx-auto space-y-6'>
+				{/* Header */}
+				<div className='text-center mb-8'>
+					<h1
+						className='text-3xl font-bold mb-2'
+						style={{
+							background: 'var(--gradient-primary)',
+							WebkitBackgroundClip: 'text',
+							WebkitTextFillColor: 'transparent',
+							backgroundClip: 'text',
+						}}>
+						{t('disability.title')}
+					</h1>
+					<p className='text-muted-foreground text-xl'>{t('disability.subtitle')}</p>
+				</div>
 
-					{/* Instructions */}
+				{/* Instructions */}
+				{!analysisComplete && (
 					<Card className='p-6 bg-primary/10 border-primary/30'>
 						<div className='flex items-start gap-3'>
 							<Activity className='w-6 h-6 text-primary mt-1 flex-shrink-0' />
@@ -165,57 +177,68 @@ const DisabilityTest = () => {
 							</div>
 						</div>
 					</Card>
+				)}
 
-					{/* Timer Display */}
-					<Card className='p-8 bg-card/50 backdrop-blur-lg border-border/50 text-center'>
-						<Timer
-							className={`w-16 h-16 mx-auto mb-4 ${
-								isRunning ? 'text-primary animate-pulse' : 'text-muted-foreground'
+				{/* Timer Display */}
+				<Card className='p-8 bg-card/50 backdrop-blur-lg border-border/50 text-center'>
+					{analysisComplete ? (
+						<p>
+							<strong>{`${t('voice.testCompleted')}:`}</strong>{' '}
+							{`${finalResult?.score?.toFixed(2)}% - ${
+								language === 'en' ? finalResult?.label_en : finalResult?.label_ar
 							}`}
-						/>
-						<div className='text-6xl font-bold mb-2 font-mono'>{formatTime(time)}</div>
-						<p className='text-muted-foreground'>
-							{isRunning ? t('disability.testInProgress') : t('disability.pressToStart')}
 						</p>
-					</Card>
+					) : (
+						<>
+							<Timer
+								className={`w-16 h-16 mx-auto mb-4 ${
+									isRunning ? 'text-primary animate-pulse' : 'text-muted-foreground'
+								}`}
+							/>
+							<div className='text-6xl font-bold mb-2 font-mono'>{formatTime(time)}</div>
+							<p className='text-muted-foreground'>
+								{isRunning ? t('disability.testInProgress') : t('disability.pressToStart')}
+							</p>
+						</>
+					)}
+				</Card>
 
-					{/* Control Buttons */}
-					<div className='grid gap-4'>
-						{!isRunning && (
-							<Button
-								onClick={startRecording}
-								className='py-6 text-lg'
-								style={{ background: 'var(--gradient-primary)' }}>
-								<Play className='w-5 h-5 ml-2' />
-								{t('disability.startTest')}
-							</Button>
-						)}
+				{/* Control Buttons */}
+				<div className='grid gap-4'>
+					{!isRunning && (
+						<Button
+							onClick={startRecording}
+							className='py-6 text-lg'
+							style={{ background: 'var(--gradient-primary)' }}>
+							<Play className='w-5 h-5 ml-2' />
+							{t('disability.startTest')}
+						</Button>
+					)}
 
-						{isRunning && (
-							<Button onClick={stopRecording} className='py-6 bg-secondary hover:bg-secondary/90'>
-								{t('disability.finish')}
-							</Button>
-						)}
+					{isRunning && (
+						<Button onClick={stopRecording} className='py-6 bg-secondary hover:bg-secondary/90'>
+							{t('disability.finish')}
+						</Button>
+					)}
 
-						{!isRunning && samples.length > 0 && (
-							<Button onClick={analyzSamples} variant='destructive' className='py-6'>
-								{t('disability.analyze')}
-							</Button>
-						)}
+					{!isRunning && samples.length > 0 && (
+						<Button onClick={analyzSamples} variant='destructive' className='py-6'>
+							{t('disability.analyze')}
+						</Button>
+					)}
 
-						{analysisComplete && (
-							<Button
-								type='button'
-								onClick={() => navigate('/early-detection')}
-								variant='outline'
-								className='flex flex-col items-center gap-3 h-auto text-base'>
-								<span>{t('disability.nextTest')}</span>
-							</Button>
-						)}
-					</div>
+					{analysisComplete && (
+						<Button
+							type='button'
+							onClick={() => navigate('/early-detection')}
+							variant='outline'
+							className='flex flex-col items-center gap-3 h-auto text-base'>
+							<span>{t('disability.nextTest')}</span>
+						</Button>
+					)}
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

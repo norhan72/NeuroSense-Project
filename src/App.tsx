@@ -17,6 +17,7 @@ import ResultsPage from './pages/ResultsPage';
 import NotFound from './pages/NotFound';
 import { Navigation } from './components/Navigation';
 import { UserDataProvider } from './contexts/UserContext';
+import { TotalResult } from './pages/TotalResult';
 
 // const queryClient = new QueryClient();
 
@@ -33,12 +34,12 @@ const App = () => (
 				<Routes>
 					<Route path='/' element={<Home />} />
 					<Route path='/input' element={<Input />} />
-					{/* <Route path='/index' element={<Index />} /> */}
+					<Route path='/image-analysis' element={<VisualCognitive />} />
 					<Route path='/voice-analysis' element={<VoiceAnalysis />} />
 					<Route path='/disability-test' element={<DisabilityTest />} />
 					<Route path='/early-detection' element={<EarlyDetectionTest />} />
-					<Route path='/image-analysis' element={<VisualCognitive />} />
-					<Route path='/results' element={<ResultsPage />} />
+					<Route path='/survey-results' element={<ResultsPage />} />
+					<Route path='/results' element={<TotalResult />} />
 					{/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
 					<Route path='*' element={<NotFound />} />
 				</Routes>
