@@ -5,7 +5,6 @@ const Input = () => {
   return (
     <>
       <InputForm />
-      <Navigation />
     </>
   );
 };

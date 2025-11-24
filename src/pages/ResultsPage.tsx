@@ -1,13 +1,7 @@
-import { Results } from "@/components/Results";
-import { Navigation } from "@/components/Navigation";
+import { Results } from '@/components/Results';
 
 const ResultsPage = () => {
-  return (
-    <>
-      <Results />
-      <Navigation />
-    </>
-  );
+	return <Results />;
 };
 
 export default ResultsPage;
