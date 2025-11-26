@@ -29,6 +29,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          
           <Route path="/input" element={<Input />} />
           <Route path="/index" element={<Index />} />
           <Route path="/voice-analysis" element={<VoiceAnalysis />} />
