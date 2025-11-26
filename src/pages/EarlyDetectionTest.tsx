@@ -218,7 +218,7 @@ export default function EarlyDetectionTest() {
     }
 
     // Navigate to results page
-    navigate('/results');
+    navigate('/survey-results');
   };
 
   const QuestionItem = ({ 

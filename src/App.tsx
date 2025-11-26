@@ -1,25 +1,28 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageToggle } from "@/components/LanguageToggle";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { NeuralBackground } from "@/components/NeuralBackground";
-import Home from "./pages/Home";
-import Input from "./pages/Input";
-import Index from "./pages/Index";
-import VoiceAnalysis from "./pages/VoiceAnalysis";
-import DisabilityTest from "./pages/DisabilityTest";
-import EarlyDetectionTest from "./pages/EarlyDetectionTest";
-import VisualCognitive from "./pages/VisualCognitive";
-import ResultsPage from "./pages/ResultsPage";
-import NotFound from "./pages/NotFound";
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Sonner } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LanguageToggle } from '@/components/LanguageToggle';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { NeuralBackground } from '@/components/NeuralBackground';
+import Home from './pages/Home';
+import Input from './pages/Input';
+import Index from './pages/Index';
+import VoiceAnalysis from './pages/VoiceAnalysis';
+import DisabilityTest from './pages/DisabilityTest';
+import EarlyDetectionTest from './pages/EarlyDetectionTest';
+import VisualCognitive from './pages/VisualCognitive';
+import ResultsPage from './pages/ResultsPage';
+import NotFound from './pages/NotFound';
+import { Navigation } from './components/Navigation';
+import { UserDataProvider } from './contexts/UserContext';
+import { TotalResult } from './pages/TotalResult';
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={new QueryClient()}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
