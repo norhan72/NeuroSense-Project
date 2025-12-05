@@ -59,9 +59,9 @@ const VisualCognitiveTest: React.FC = () => {
 				if (data.status === 'finished') {
 					setFinished(true);
 					setFinalResult({
-						vision_score: data.vision_score,
-						interpretation_en: data.interpretation_en,
-						interpretation_ar: data.interpretation_ar,
+						vision_score: data.score,
+						interpretation_en: data.label_en,
+						interpretation_ar: data.label_ar,
 					});
 					setUserData({ ...userData, results: { ...userData.results, vision: data } });
 				} else if (data && data.image) {

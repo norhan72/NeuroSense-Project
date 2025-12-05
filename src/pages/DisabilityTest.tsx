@@ -184,9 +184,11 @@ const DisabilityTest = () => {
 					{analysisComplete ? (
 						<p>
 							<strong>{`${t('voice.testCompleted')}:`}</strong>{' '}
-							{`${finalResult?.score?.toFixed(2)}% - ${
-								language === 'en' ? finalResult?.label_en : finalResult?.label_ar
-							}`}
+							{finalResult
+								? `${finalResult?.score?.toFixed(2)}% - ${
+										language === 'en' ? finalResult?.label_en : finalResult?.label_ar
+								  }`
+								: 'N/A'}
 						</p>
 					) : (
 						<>

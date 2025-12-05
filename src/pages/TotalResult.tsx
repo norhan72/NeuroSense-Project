@@ -128,7 +128,7 @@ export const TotalResult = () => {
 						<Separator orientation='horizontal' />
 						<div>
 							<h2 className='text-xl font-semibold mb-2'>
-								{t('totalResult.combinedResult')}: {combinedResult.toFixed(2)}%
+								{t('totalResult.combinedResult')}: {combinedResult ? combinedResult.toFixed(2) : 'N/A'}%
 							</h2>
 							<p>{t('totalResult.combinedResultDescription')}</p>
 						</div>
