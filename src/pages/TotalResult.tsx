@@ -38,7 +38,7 @@ export const TotalResult = () => {
 	};
 
 	return (
-		<div className='max-w-3xl mx-auto p-4 space-y-6'>
+		<div className='max-w-3xl mx-auto px-4 py-10 space-y-6'>
 			{!userData.results ||
 			!userData.results['vision'] ||
 			!userData.results['motion'] ||
@@ -132,7 +132,7 @@ export const TotalResult = () => {
 							</h2>
 							<p>{t('totalResult.combinedResultDescription')}</p>
 						</div>
-						<div className='flex gap-4'>
+						<div className='flex gap-4 pt-4 pb-16'>
 							<Button onClick={() => navigate('/')} variant='secondary' className='w-full'>
 								{t('totalResult.back')}
 							</Button>
