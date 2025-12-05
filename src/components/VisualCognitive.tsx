@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BASE_SERVER_URL_1 } from '@/utils';
 import { useUserData } from '@/contexts/useUserData';
+import { Progress } from './ui/progress';
 
 const VisualCognitiveTest: React.FC = () => {
 	const navigate = useNavigate();
 	const { userData, setUserData } = useUserData();
+	const [loading, setLoading] = useState<boolean>(true);
 	const [seen, setSeen] = useState<boolean | null>(null);
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 	const [session_id, setSessionId] = useState<string | null>(null);
@@ -33,6 +35,7 @@ const VisualCognitiveTest: React.FC = () => {
 			fetch(`${BASE_SERVER_URL_1}/vision/start`)
 				.then((res) => res.json())
 				.then((data) => {
+					setLoading(false);
 					if (data && data.image) {
 						setImageUrl(data.image);
 						setSessionId(data.session_id);
@@ -56,6 +59,7 @@ const VisualCognitiveTest: React.FC = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
+				setLoading(false);
 				if (data.status === 'finished') {
 					setFinished(true);
 					setFinalResult({
@@ -76,6 +80,7 @@ const VisualCognitiveTest: React.FC = () => {
 	}, [seen, difficulty, session_id]);
 
 	const handleAnswer = (answer: string) => {
+		setLoading(true);
 		setSeen(answer === 'clear');
 	};
 
@@ -84,25 +89,29 @@ const VisualCognitiveTest: React.FC = () => {
 			{!finished ? (
 				<>
 					<h1 className='text-2xl font-bold'>{t('vision.question')}</h1>
-					<div className='flex flex-col justify-center items-center gap-4'>
-						<div className='border p-2 rounded'>
-							<img src={`/vision/${imageUrl}`} alt='Test Visual' className='max-w-xs' />
-						</div>
+					{loading ? (
+						<Progress />
+					) : (
+						<div className='flex flex-col justify-center items-center gap-4'>
+							<div className='border p-2 rounded'>
+								<img src={`/vision/${imageUrl}`} alt='Test Visual' className='max-w-xs' />
+							</div>
 
-						<div className='flex gap-4'>
-							<button
-								onClick={() => handleAnswer('clear')}
-								className='px-6 py-3 bg-green-500 text-white rounded-2xl shadow'>
-								{t('vision.btnClear')}
-							</button>
+							<div className='flex gap-4'>
+								<button
+									onClick={() => handleAnswer('clear')}
+									className='px-6 py-3 bg-green-500 text-white rounded-2xl shadow'>
+									{t('vision.btnClear')}
+								</button>
 
-							<button
-								onClick={() => handleAnswer('not clear')}
-								className='px-6 py-3 bg-red-500 text-white rounded-2xl shadow'>
-								{t('vision.btnNonClear')}
-							</button>
+								<button
+									onClick={() => handleAnswer('not clear')}
+									className='px-6 py-3 bg-red-500 text-white rounded-2xl shadow'>
+									{t('vision.btnNonClear')}
+								</button>
+							</div>
 						</div>
-					</div>
+					)}
 				</>
 			) : (
 				<>
