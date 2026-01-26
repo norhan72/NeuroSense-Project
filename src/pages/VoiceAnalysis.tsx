@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { LanguageToggle } from '@/components/LanguageToggle';
-import VoiceRecorder from '@/components/VoiceRecord';
+import { Suspense, lazy } from 'react';
+const VoiceRecorder = lazy(() => import('@/components/VoiceRecord'));
 import { BASE_SERVER_URL_1 } from '@/utils';
 import { useUserData } from '@/contexts/useUserData';
 
@@ -26,7 +27,7 @@ const VoiceAnalysis = () => {
 		if (userData?.results && userData.results['speech']) {
 			navigate('/');
 		}
-	}, []);
+	}, [navigate, userData.results]);
 
 	const handleRecordComplete = (blob: Blob) => {
 		setRecordedBlob(blob);
@@ -48,57 +49,27 @@ const VoiceAnalysis = () => {
 	};
 
 	return (
-		<>
+		<div className='min-h-screen flex flex-col items-center justify-center p-6'>
 			<LanguageToggle />
-			<div className='min-h-screen p-6 pb-24'>
-				<div className='max-w-2xl mx-auto space-y-6'>
-					{/* Header */}
-					<div className='text-center mb-8'>
-						<h1 className='text-3xl font-bold mb-2 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent'>
-							{t('voice.title')}
-						</h1>
-						<p className='text-muted-foreground'>{t('voice.subtitle')}</p>
+			<Card className='w-full max-w-lg p-8 bg-card/50 backdrop-blur-lg border-border/50'>
+				<h2 className='text-2xl font-bold mb-6 text-center'>{t('voice.title')}</h2>
+				{!finished ? (
+					<Suspense fallback={<div>Loading Recorder...</div>}>
+						<VoiceRecorder onRecordComplete={handleRecordComplete} />
+					</Suspense>
+				) : (
+					<div className='text-center'>
+						<p className='mb-4'>
+							<strong>{`${t('voice.testCompleted')}:`}</strong>{' '}
+							{`${Math.max(finalResult?.score * 100, finalResult?.score * -100).toFixed(2)}% - ${
+								appLanguage === 'en' ? finalResult?.label_en : finalResult?.label_ar
+							}`}
+						</p>
+						<Button onClick={() => navigate('/results')}>{t('voice.viewResults')}</Button>
 					</div>
-
-					{/* Recorder */}
-					<Card className='p-8 bg-card/50 backdrop-blur-lg text-center'>
-						{finished ? (
-							<p>
-								<strong>{`${t('voice.testCompleted')}:`}</strong>{' '}
-								{`${Math.max(finalResult?.score * 100, finalResult?.score * -100).toFixed(2)}% - ${
-									appLanguage === 'en' ? finalResult?.label_en : finalResult?.label_ar
-								}`}
-							</p>
-						) : (
-							<>
-								<VoiceRecorder onRecordComplete={handleRecordComplete} />
-								{recordedBlob && <p className='text-green-500 mt-4'>{t('voice.recordingSaved')}</p>}
-							</>
-						)}
-					</Card>
-
-					{/* Submit */}
-					<div className='flex gap-4'>
-						<Button type='button' onClick={() => navigate('/input')} variant='outline' className='flex-1'>
-							{t('input.back')}
-						</Button>
-
-						<Button
-							type='submit'
-							onClick={() => navigate('/disability-test')}
-							className='flex-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white'
-							disabled={!finished}>
-							{t('voice.complete')}
-							{appLanguage === 'en' ? (
-								<ArrowRight className='mr-2 w-4 h-4' />
-							) : (
-								<ArrowLeft className='mr-2 w-4 h-4' />
-							)}
-						</Button>
-					</div>
-				</div>
-			</div>
-		</>
+				)}
+			</Card>
+		</div>
 	);
 };
 

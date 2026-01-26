@@ -8,7 +8,7 @@ import { useUserData } from '@/contexts/useUserData';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Separator } from '@/components/ui/separator';
 
-export const TotalResult = () => {
+const TotalResult = () => {
 	const { t, language } = useLanguage();
 	const { userData, resetUserData } = useUserData();
 	const { theme } = useTheme();
@@ -146,3 +146,5 @@ export const TotalResult = () => {
 		</div>
 	);
 };
+
+export default TotalResult;

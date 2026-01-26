@@ -1,28 +1,24 @@
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { NeuralBackground } from '@/components/NeuralBackground';
-import Home from './pages/Home';
-import Input from './pages/Input';
-import Index from './pages/Index';
-import VoiceAnalysis from './pages/VoiceAnalysis';
-import DisabilityTest from './pages/DisabilityTest';
-import EarlyDetectionTest from './pages/EarlyDetectionTest';
-import VisualCognitive from './pages/VisualCognitive';
-import ResultsPage from './pages/ResultsPage';
-import NotFound from './pages/NotFound';
-import { Navigation } from './components/Navigation';
+const Home = lazy(() => import('./pages/Home'));
+const Input = lazy(() => import('./pages/Input'));
+const VoiceAnalysis = lazy(() => import('./pages/VoiceAnalysis'));
+const DisabilityTest = lazy(() => import('./pages/DisabilityTest'));
+const EarlyDetectionTest = lazy(() => import('./pages/EarlyDetectionTest'));
+const VisualCognitive = lazy(() => import('./pages/VisualCognitive'));
+const ResultsPage = lazy(() => import('./pages/ResultsPage'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Navigation = lazy(() => import('./components/Navigation'));
 import { UserDataProvider } from './contexts/UserContext';
-import { TotalResult } from './pages/TotalResult';
-
-// const queryClient = new QueryClient();
+const TotalResult = lazy(() => import('./pages/TotalResult'));
 
 const App = () => (
-	// <QueryClientProvider client={queryClient}>
 	<TooltipProvider>
 		<UserDataProvider>
 			<Toaster />
@@ -31,23 +27,24 @@ const App = () => (
 			<LanguageToggle />
 			<ThemeToggle />
 			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/input' element={<Input />} />
-					<Route path='/image-analysis' element={<VisualCognitive />} />
-					<Route path='/voice-analysis' element={<VoiceAnalysis />} />
-					<Route path='/disability-test' element={<DisabilityTest />} />
-					<Route path='/early-detection' element={<EarlyDetectionTest />} />
-					<Route path='/survey-results' element={<ResultsPage />} />
-					<Route path='/results' element={<TotalResult />} />
-					{/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-					<Route path='*' element={<NotFound />} />
-				</Routes>
-				<Navigation />
+				<Suspense fallback={<div className='w-full h-screen flex items-center justify-center'>Loading...</div>}>
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/input' element={<Input />} />
+						<Route path='/image-analysis' element={<VisualCognitive />} />
+						<Route path='/voice-analysis' element={<VoiceAnalysis />} />
+						<Route path='/disability-test' element={<DisabilityTest />} />
+						<Route path='/early-detection' element={<EarlyDetectionTest />} />
+						<Route path='/survey-results' element={<ResultsPage />} />
+						<Route path='/results' element={<TotalResult />} />
+						{/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+						<Route path='*' element={<NotFound />} />
+					</Routes>
+					<Navigation />
+				</Suspense>
 			</BrowserRouter>
 		</UserDataProvider>
 	</TooltipProvider>
-	// </QueryClientProvider>
 );
 
 export default App;

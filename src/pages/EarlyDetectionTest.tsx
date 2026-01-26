@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
